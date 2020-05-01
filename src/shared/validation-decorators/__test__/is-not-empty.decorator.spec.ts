@@ -2,8 +2,10 @@ import { Validator, ValidationError } from 'class-validator';
 
 import {
   mockTestDto,
-  mockInvalidTestDto,
-  mockValidationError,
+  mockTestDtoWithInvalidFirstName,
+  mockValidationErrorForString,
+  mockTestDtoWithInvalidCourses,
+  mockValidationErrorForStringArray,
 } from './test-data/is-not-empty.decorator.testdata';
 
 describe('IsNotEmpty', () => {
@@ -19,10 +21,23 @@ describe('IsNotEmpty', () => {
 
   it('Should fail DTO validation if the string is empty', async () => {
     const validatorErrors: ValidationError[] = await validator.validate(
-      mockInvalidTestDto,
+      mockTestDtoWithInvalidFirstName,
     );
 
     expect(validatorErrors.length).toEqual(1);
-    expect(validatorErrors[0].constraints).toEqual(mockValidationError);
+    expect(validatorErrors[0].constraints).toEqual(
+      mockValidationErrorForString,
+    );
+  });
+
+  it('Should fail DTO validation if string array has empty strings', async () => {
+    const validatorErrors: ValidationError[] = await validator.validate(
+      mockTestDtoWithInvalidCourses,
+    );
+
+    expect(validatorErrors.length).toEqual(1);
+    expect(validatorErrors[0].constraints).toEqual(
+      mockValidationErrorForStringArray,
+    );
   });
 });
