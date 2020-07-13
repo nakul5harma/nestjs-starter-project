@@ -1,28 +1,30 @@
-import * as winston from 'winston';
-import * as config from 'config';
+import { format, transports, createLogger, LoggerOptions, Logger } from 'winston';
+import { get } from 'config';
 
-import { getDateInYYYYMMDDFormat } from '../utils/common.util';
+import { getDateInYYYYMMDDFormat, isProductionEnv } from '../utils/common.util';
+import { ServerConfig } from '../models/config/server.config';
 
-const { combine, timestamp, json } = winston.format;
+const { combine, timestamp, json } = format;
 
 const TEN_MBS_IN_BYTES = 10000000;
 
-const serverConfig = config.get('server');
-const loggerConfig: winston.LoggerOptions = {
+const serverConfig = get<ServerConfig>('server');
+
+const loggerConfig: LoggerOptions = {
   format: combine(timestamp(), json()),
   transports: [
-    new winston.transports.File({
+    new transports.File({
       dirname: 'logs',
       filename: `server-${getDateInYYYYMMDDFormat(new Date())}.log`,
       maxsize: TEN_MBS_IN_BYTES,
-      level: process.env.LOG_LEVEL || serverConfig.loglevel || 'info',
+      level: process.env.LOG_LEVEL || serverConfig.logLevel || 'info',
     }),
   ],
 };
 
 export class LoggerService {
   private static loggerServiceInstance: LoggerService;
-  private logger: winston.Logger;
+  private logger: Logger;
 
   static getLoggerServiceInstance() {
     if (this.loggerServiceInstance === undefined) {
@@ -32,17 +34,15 @@ export class LoggerService {
   }
 
   private constructor() {
-    const environment = config.get('env');
-
-    if (environment !== 'PRODUCTION') {
+    if (!isProductionEnv()) {
       (loggerConfig.transports as any[]).push(
-        new winston.transports.Console({
+        new transports.Console({
           level: 'debug',
         }),
       );
     }
 
-    this.logger = winston.createLogger(loggerConfig);
+    this.logger = createLogger(loggerConfig);
   }
 
   info(namespace: string, message?: any, ...meta: any[]) {

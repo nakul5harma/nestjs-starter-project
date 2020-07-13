@@ -14,15 +14,9 @@ class StudentDto {
 }
 
 export const mockTestDto = new StudentDto('John', ['MA-101', 'CS-201']);
-export const mockTestDtoWithInvalidFirstName = new StudentDto('', [
-  'MA-101',
-  'CS-201',
-]);
+export const mockTestDtoWithInvalidFirstName = new StudentDto('', ['MA-101', 'CS-201']);
 
-export const mockTestDtoWithInvalidCourses = new StudentDto('John', [
-  '',
-  'CS-201',
-]);
+export const mockTestDtoWithInvalidCourses = new StudentDto('John', ['', 'CS-201']);
 
 export const mockValidationErrorForString = {
   isNotEmpty: 'firstName must not be empty',

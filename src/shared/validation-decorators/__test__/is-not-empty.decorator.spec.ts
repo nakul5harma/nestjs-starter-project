@@ -12,9 +12,7 @@ describe('IsNotEmpty', () => {
   const validator = new Validator();
 
   it('Should validate DTO successfully', async () => {
-    const validatorErrors: ValidationError[] = await validator.validate(
-      mockTestDto,
-    );
+    const validatorErrors: ValidationError[] = await validator.validate(mockTestDto);
 
     expect(validatorErrors.length).toEqual(0);
   });
@@ -25,9 +23,7 @@ describe('IsNotEmpty', () => {
     );
 
     expect(validatorErrors.length).toEqual(1);
-    expect(validatorErrors[0].constraints).toEqual(
-      mockValidationErrorForString,
-    );
+    expect(validatorErrors[0].constraints).toEqual(mockValidationErrorForString);
   });
 
   it('Should fail DTO validation if string array has empty strings', async () => {
@@ -36,8 +32,6 @@ describe('IsNotEmpty', () => {
     );
 
     expect(validatorErrors.length).toEqual(1);
-    expect(validatorErrors[0].constraints).toEqual(
-      mockValidationErrorForStringArray,
-    );
+    expect(validatorErrors[0].constraints).toEqual(mockValidationErrorForStringArray);
   });
 });

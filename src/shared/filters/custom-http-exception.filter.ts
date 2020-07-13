@@ -2,8 +2,8 @@ import { Catch, ExceptionFilter, ArgumentsHost } from '@nestjs/common';
 
 import { Response } from 'express';
 
-import { customHttpExceptionFormatter } from '../utils/custom-http-exception-formatter.util';
 import { CustomHttpException } from '../exceptions/custom-http.exception';
+import { customHttpExceptionFormatter } from '../utils/custom-http-exception-formatter.util';
 
 @Catch(CustomHttpException)
 export class CustomHttpExceptionFilter implements ExceptionFilter {

@@ -2,12 +2,11 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import { get } from 'config';
 
-import { isProductionEnv } from '../utils/common.util';
 import { DBConfig } from '../models/config/db.config';
 
-const dbConfig: DBConfig = get<DBConfig>('db');
+const dbConfig = get<DBConfig>('db');
 
-export const typeOrmConfig: TypeOrmModuleOptions = {
+const typeOrmConfig: TypeOrmModuleOptions = {
   type: dbConfig.type,
   host: dbConfig.host,
   port: dbConfig.port,
@@ -15,5 +14,12 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   password: dbConfig.password,
   database: dbConfig.database,
   entities: [__dirname + '../../database/**/*.entity.ts'],
-  synchronize: isProductionEnv() ? false : dbConfig.synchronize,
+  synchronize: false,
+  migrationsTableName: 'migration',
+  migrations: ['migrations/**/*{.ts,.js}'],
+  cli: {
+    migrationsDir: 'migrations',
+  },
 };
+
+export = typeOrmConfig;

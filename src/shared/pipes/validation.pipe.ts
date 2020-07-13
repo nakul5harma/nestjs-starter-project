@@ -3,13 +3,14 @@ import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
-import { validatorOptions } from '../options/validator.options';
 import { LoggerService } from '../logger/logger.service';
 import { ValidationException } from '../exceptions/validation.exception';
+import { validatorOptions } from '../options/validator.options';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   private readonly logNamespace = `pipe.${ValidationPipe.name.toLowerCase()}`;
+  private readonly logger = LoggerService.getLoggerServiceInstance();
 
   async transform(value: any, metadata: ArgumentMetadata) {
     const { metatype } = metadata;
@@ -18,17 +19,17 @@ export class ValidationPipe implements PipeTransform<any> {
       return value;
     }
     const object = plainToClass(metatype, value);
-    const errors = await validate(object, validatorOptions);
+    const validationErrors = await validate(object, validatorOptions);
 
-    if (errors.length > 0) {
-      LoggerService.getLoggerServiceInstance().warn(
+    if (validationErrors.length > 0) {
+      this.logger.warn(
         `${this.logNamespace}.transform.warned`,
-        `Validation failed for ${
-          metatype.name
-        }: validation errors - ${JSON.stringify(errors)}`,
+        `Validation failed for ${metatype.name}`,
+        'validationErrors:',
+        validationErrors,
       );
 
-      throw new ValidationException(errors);
+      throw new ValidationException(validationErrors);
     }
 
     return value;

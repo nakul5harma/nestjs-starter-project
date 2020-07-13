@@ -30,8 +30,7 @@ const validationErrorsWithChildren: ValidationError[] = [
     property: 'transactionDate',
     children: [],
     constraints: {
-      matches:
-        'transactionDate must match /^[0-9]{2}-[0-9]{2}-[0-9]{4}$/ regular expression',
+      matches: 'transactionDate must match /^[0-9]{2}-[0-9]{2}-[0-9]{4}$/ regular expression',
     },
   },
   {
@@ -64,9 +63,7 @@ const validationErrorsWithChildren: ValidationError[] = [
   },
 ];
 
-export const mockValidationException = new ValidationException(
-  validationErrors,
-);
+export const mockValidationException = new ValidationException(validationErrors);
 
 export const mockFormattedError: ResponseModel = {
   code: ResponseMessages.INVALID_REQUEST_PAYLOAD.code,

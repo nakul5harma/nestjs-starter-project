@@ -1,10 +1,14 @@
 {
+  "env": "LOCAL",
+  "version": "1.0.0",
   "server": {
     "host": "localhost",
     "port": 3000,
-    "loglevel": "debug"
+    "logLevel": "debug"
   },
   "db": {
-    "type": "postgres"
+    "type": "postgres",
+    "port": 5432,
+    "synchronize": false
   }
 }

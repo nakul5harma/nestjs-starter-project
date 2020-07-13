@@ -3,7 +3,6 @@ import { BadRequestException } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
 
 import { ResponseMessages } from '../constants/response-messages.constants';
-import { ValidationConstraints } from '../constants/validation-constraints.constants';
 
 export class ValidationException extends BadRequestException {
   constructor(public readonly validationErrors?: ValidationError[]) {
@@ -20,10 +19,7 @@ export class ValidationException extends BadRequestException {
     }
   }
 
-  private formatErrors(
-    errors: ValidationError[],
-    errorMessage: string,
-  ): string {
+  private formatErrors(errors: ValidationError[], errorMessage: string): string {
     if (!errors || errors.length === 0) {
       return errorMessage;
     }
@@ -32,15 +28,11 @@ export class ValidationException extends BadRequestException {
       if (error.constraints !== undefined) {
         const errorConstraints: string[] = Object.keys(error.constraints);
 
-        if (errorConstraints.includes(ValidationConstraints.IS_ARRAY)) {
-          errorMessage +=
-            error.constraints[ValidationConstraints.IS_ARRAY] + ', ';
-        } else {
-          for (const property of errorConstraints) {
-            errorMessage += error.constraints[property] + ', ';
-          }
+        for (const property of errorConstraints) {
+          errorMessage += error.constraints[property] + ', ';
         }
       }
+
       errorMessage = this.formatErrors(error.children, errorMessage);
     });
 

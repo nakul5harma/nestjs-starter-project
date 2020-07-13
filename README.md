@@ -47,7 +47,7 @@ $ npm run test:cov
 $ npm run build
 ```
 
-## utility scripts
+## Utility scripts
 
 ```bash
 # formatting files
@@ -56,3 +56,7 @@ $ npm run format
 # check lint
 $ npm run lint
 ```
+
+## License
+
+[MIT](./LICENSE)

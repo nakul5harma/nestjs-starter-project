@@ -11,12 +11,5 @@
     "baseUrl": "./",
     "incremental": true
   },
-  "exclude": [
-    "node_modules",
-    "e2e-test",
-    "dist",
-    "**/*spec.ts",
-    "logs",
-    "coverage"
-  ]
+  "exclude": ["node_modules", "e2e-test", "dist", "**/*spec.ts", "logs", "coverage"]
 }

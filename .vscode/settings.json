@@ -1,4 +1,4 @@
 {
   "editor.formatOnSave": true,
-  "editor.formatOnSaveTimeout": 750
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

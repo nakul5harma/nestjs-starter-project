@@ -8,14 +8,12 @@ import {
 
 describe('validationExceptionFormatter', () => {
   it('Should return formatted error', () => {
-    expect(validationExceptionFormatter(mockValidationException)).toEqual(
-      mockFormattedError,
-    );
+    expect(validationExceptionFormatter(mockValidationException)).toEqual(mockFormattedError);
   });
 
   it('Should return formatted error when validation error have children properties', () => {
-    expect(
-      validationExceptionFormatter(mockValidationExceptionWithChildren),
-    ).toEqual(mockFormattedErrorWithChildren);
+    expect(validationExceptionFormatter(mockValidationExceptionWithChildren)).toEqual(
+      mockFormattedErrorWithChildren,
+    );
   });
 });

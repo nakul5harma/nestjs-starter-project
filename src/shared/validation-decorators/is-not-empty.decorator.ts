@@ -1,8 +1,4 @@
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidationArguments,
-} from 'class-validator';
+import { registerDecorator, ValidationOptions, ValidationArguments } from 'class-validator';
 
 export function IsNotEmpty(validationOptions?: ValidationOptions) {
   return (object: any, propertyName: string) => {
@@ -18,15 +14,9 @@ export function IsNotEmpty(validationOptions?: ValidationOptions) {
       options: validationOptions || defaultValidationOptions,
       validator: {
         validate(value: any, args: ValidationArguments) {
-          if (
-            validationOptions &&
-            validationOptions.each &&
-            value instanceof Array
-          ) {
+          if (validationOptions && validationOptions.each && value instanceof Array) {
             return value.every((arrayItem: string) => {
-              return (
-                typeof arrayItem === 'string' && arrayItem.trim().length > 0
-              );
+              return typeof arrayItem === 'string' && arrayItem.trim().length > 0;
             });
           }
 

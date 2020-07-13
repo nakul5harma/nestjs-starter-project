@@ -12,7 +12,7 @@
       "preLaunchTask": "tsc: build - tsconfig.json",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "restart": true,
-      "runtimeExecutable": "nodemon",
+      "runtimeExecutable": "node",
       "console": "integratedTerminal",
       "protocol": "inspector"
     }

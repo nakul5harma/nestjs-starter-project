@@ -6,8 +6,6 @@ import {
 
 describe('customHttpExceptionFormatter', () => {
   it('Should return formatted error', () => {
-    expect(customHttpExceptionFormatter(mockHttpException)).toEqual(
-      mockFormattedError,
-    );
+    expect(customHttpExceptionFormatter(mockHttpException)).toEqual(mockFormattedError);
   });
 });

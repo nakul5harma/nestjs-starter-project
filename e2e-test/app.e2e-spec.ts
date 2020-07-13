@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 
-import * as supertest from 'supertest';
+import { agent } from 'supertest';
 
 import { UnhandledExceptionsFilter } from '../src/shared/filters/unhandled-exception.filter';
 import { CustomHttpExceptionFilter } from '../src/shared/filters/custom-http-exception.filter';
 import { ValidationExceptionFilter } from '../src/shared/filters/validation-exception.filter';
+import { ValidationPipe } from '../src/shared/pipes/validation.pipe';
 import { AppModule } from '../src/app/app.module';
+import { mockHealthCheckAPIResponse } from './test-data/app.e2e-spec.test-data';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -24,6 +26,8 @@ describe('AppController (e2e)', () => {
       new ValidationExceptionFilter(),
     );
 
+    app.useGlobalPipes(new ValidationPipe());
+
     await app.init();
   });
 
@@ -31,14 +35,13 @@ describe('AppController (e2e)', () => {
     await app.close();
   });
 
-  describe('GET /healthCheck', () => {
-    it('Should send application name in response when application is running', async (done: any) => {
-      const { text } = await supertest
-        .agent(app.getHttpServer())
-        .get('/healthCheck')
+  describe('GET /health', () => {
+    it('Should respond when application is running', async (done: any) => {
+      const { body } = await agent(app.getHttpServer())
+        .get('/health')
         .expect(HttpStatus.OK);
 
-      expect(text).toEqual('NestJS Starter Project');
+      expect(body).toEqual(mockHealthCheckAPIResponse);
 
       done();
     });

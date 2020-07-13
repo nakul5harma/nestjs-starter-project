@@ -7,8 +7,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @HttpCode(HttpStatus.OK)
-  @Get('healthCheck')
-  getAppName(): string {
-    return this.appService.getAppName();
+  @Get('/health')
+  checkServerHealth() {
+    return this.appService.checkServerHealth();
   }
 }

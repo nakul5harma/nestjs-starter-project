@@ -1,17 +1,13 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpStatus,
-} from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpStatus } from '@nestjs/common';
 
-import { ResponseModel } from '../models/response.model';
-import { ResponseMessages } from '../constants/response-messages.constants';
 import { LoggerService } from '../logger/logger.service';
+import { ResponseMessages } from '../constants/response-messages.constants';
+import { ResponseModel } from '../models/response.model';
 
 @Catch()
 export class UnhandledExceptionsFilter implements ExceptionFilter {
   private readonly logNamespace = `filter.${UnhandledExceptionsFilter.name.toLowerCase()}`;
+  private readonly logger = LoggerService.getLoggerServiceInstance();
 
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
@@ -53,11 +49,7 @@ export class UnhandledExceptionsFilter implements ExceptionFilter {
       status = HttpStatus.BAD_REQUEST;
     }
 
-    LoggerService.getLoggerServiceInstance().error(
-      `${this.logNamespace}.catch`,
-      exception.stack,
-      `Caught unhandled exception - ${JSON.stringify(exception.message)}`,
-    );
+    this.logger.error(`${this.logNamespace}.catch.failed`, exception.stack, exception.message);
 
     response.status(status).json(responseModel);
   }
