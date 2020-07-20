@@ -1,7 +1,9 @@
+import { get } from 'config';
+
 import { ResponseMessages } from '../../src/shared/constants/response-messages.constants';
 
 export const mockHealthCheckAPIResponse = {
-  data: `I am healthy, running version 1.0.0`,
+  data: `NestJS Starter Project (V${get('version')}) is healthy`,
   code: ResponseMessages.SUCCESS.code,
   message: ResponseMessages.SUCCESS.message,
 };

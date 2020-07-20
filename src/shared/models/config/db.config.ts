@@ -5,5 +5,4 @@ export interface DBConfig {
   username: string;
   password: string;
   database: string;
-  synchronize: boolean;
 }

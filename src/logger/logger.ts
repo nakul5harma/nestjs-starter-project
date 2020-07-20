@@ -1,8 +1,10 @@
-import { format, transports, createLogger, LoggerOptions, Logger } from 'winston';
+import { LoggerService } from '@nestjs/common';
+
+import { format, transports, createLogger, LoggerOptions, Logger as WinstonLogger } from 'winston';
 import { get } from 'config';
 
-import { getDateInYYYYMMDDFormat, isProductionEnv } from '../utils/common.util';
-import { ServerConfig } from '../models/config/server.config';
+import { getDateInYYYYMMDDFormat, isProductionEnv } from '../shared/utils/common.util';
+import { ServerConfig } from '../shared/models/config/server.config';
 
 const { combine, timestamp, json } = format;
 
@@ -15,22 +17,22 @@ const loggerConfig: LoggerOptions = {
   transports: [
     new transports.File({
       dirname: 'logs',
-      filename: `server-${getDateInYYYYMMDDFormat(new Date())}.log`,
+      filename: `nestjs-starter-project-${getDateInYYYYMMDDFormat(new Date())}.log`,
       maxsize: TEN_MBS_IN_BYTES,
       level: process.env.LOG_LEVEL || serverConfig.logLevel || 'info',
     }),
   ],
 };
 
-export class LoggerService {
-  private static loggerServiceInstance: LoggerService;
-  private logger: Logger;
+export class Logger implements LoggerService {
+  private static loggerInstance: Logger = null;
+  private logger: WinstonLogger;
 
-  static getLoggerServiceInstance() {
-    if (this.loggerServiceInstance === undefined) {
-      this.loggerServiceInstance = new LoggerService();
+  static getInstance() {
+    if (!this.loggerInstance) {
+      this.loggerInstance = new Logger();
     }
-    return this.loggerServiceInstance;
+    return this.loggerInstance;
   }
 
   private constructor() {

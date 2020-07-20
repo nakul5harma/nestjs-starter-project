@@ -11,6 +11,6 @@ export const mockHttpException = new CustomHttpException(
 
 export const mockFormattedError: ResponseModel = {
   code: ResponseMessages.INTERNAL_SERVER_ERROR.code,
-  message: ResponseMessages.INTERNAL_SERVER_ERROR.message,
+  message: `Error: ${ResponseMessages.INTERNAL_SERVER_ERROR.message}`,
   data: null,
 };

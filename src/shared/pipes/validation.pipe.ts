@@ -3,14 +3,14 @@ import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
-import { LoggerService } from '../logger/logger.service';
+import { Logger } from '../../logger/logger';
 import { ValidationException } from '../exceptions/validation.exception';
 import { validatorOptions } from '../options/validator.options';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
-  private readonly logNamespace = `pipe.${ValidationPipe.name.toLowerCase()}`;
-  private readonly logger = LoggerService.getLoggerServiceInstance();
+  private readonly logNameSpace = `Pipe.${ValidationPipe.name}`;
+  private readonly logger = Logger.getInstance();
 
   async transform(value: any, metadata: ArgumentMetadata) {
     const { metatype } = metadata;
@@ -23,7 +23,7 @@ export class ValidationPipe implements PipeTransform<any> {
 
     if (validationErrors.length > 0) {
       this.logger.warn(
-        `${this.logNamespace}.transform.warned`,
+        `${this.logNameSpace}.transform.warned`,
         `Validation failed for ${metatype.name}`,
         'validationErrors:',
         validationErrors,

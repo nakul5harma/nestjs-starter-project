@@ -68,7 +68,7 @@ export const mockValidationException = new ValidationException(validationErrors)
 export const mockFormattedError: ResponseModel = {
   code: ResponseMessages.INVALID_REQUEST_PAYLOAD.code,
   message:
-    'mobileNum length must be 12, dob must be valid date and less than Wed Dec 11 2019 14:19:43 GMT+0530 (India Standard Time)',
+    'Error: mobileNum length must be 12, dob must be valid date and less than Wed Dec 11 2019 14:19:43 GMT+0530 (India Standard Time)',
   data: validationErrors,
 };
 
@@ -79,6 +79,6 @@ export const mockValidationExceptionWithChildren = new ValidationException(
 export const mockFormattedErrorWithChildren: ResponseModel = {
   code: ResponseMessages.INVALID_REQUEST_PAYLOAD.code,
   message:
-    'transactionDate must match /^[0-9]{2}-[0-9]{2}-[0-9]{4}$/ regular expression, name should not be null or undefined, amount can not be empty',
+    'Error: transactionDate must match /^[0-9]{2}-[0-9]{2}-[0-9]{4}$/ regular expression, name should not be null or undefined, amount can not be empty',
   data: validationErrorsWithChildren,
 };

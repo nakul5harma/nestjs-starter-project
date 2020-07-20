@@ -5,6 +5,6 @@ export const customHttpExceptionFormatter = (exception: CustomHttpException): Re
   return new ResponseModel(
     exception.data ? exception.data : null,
     exception.message.code,
-    exception.message.message,
+    `Error: ${exception.message.message}`,
   );
 };

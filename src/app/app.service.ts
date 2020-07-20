@@ -7,9 +7,9 @@ import { ResponseModel } from '../shared/models/response.model';
 
 @Injectable()
 export class AppService {
-  checkServerHealth() {
+  checkServerHealth(): ResponseModel {
     return new ResponseModel(
-      `I am healthy, running version ${get('version')}`,
+      `NestJS Starter Project (V${get('version')}) is healthy`,
       ResponseMessages.SUCCESS.code,
       ResponseMessages.SUCCESS.message,
     );

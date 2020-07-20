@@ -6,6 +6,6 @@ export const validationExceptionFormatter = (exception: ValidationException): Re
   return new ResponseModel(
     exception.validationErrors,
     ResponseMessages.INVALID_REQUEST_PAYLOAD.code,
-    exception.getErrorMessage(),
+    `Error: ${exception.getErrorMessage()}`,
   );
 };

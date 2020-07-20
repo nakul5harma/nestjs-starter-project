@@ -1,16 +1,18 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpStatus } from '@nestjs/common';
 
-import { LoggerService } from '../logger/logger.service';
+import { Logger } from '../../logger/logger';
 import { ResponseMessages } from '../constants/response-messages.constants';
 import { ResponseModel } from '../models/response.model';
+import { getRequestLogData } from '../utils/common.util';
 
 @Catch()
 export class UnhandledExceptionsFilter implements ExceptionFilter {
-  private readonly logNamespace = `filter.${UnhandledExceptionsFilter.name.toLowerCase()}`;
-  private readonly logger = LoggerService.getLoggerServiceInstance();
+  private readonly logNameSpace = `Filter.${UnhandledExceptionsFilter.name}`;
+  private readonly logger = Logger.getInstance();
 
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
+    const request = ctx.getRequest();
     const response = ctx.getResponse();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -18,7 +20,7 @@ export class UnhandledExceptionsFilter implements ExceptionFilter {
     let responseModel = new ResponseModel(
       null,
       ResponseMessages.INTERNAL_SERVER_ERROR.code,
-      ResponseMessages.INTERNAL_SERVER_ERROR.message,
+      `Error: ${ResponseMessages.INTERNAL_SERVER_ERROR.message}`,
     );
 
     if (
@@ -29,7 +31,7 @@ export class UnhandledExceptionsFilter implements ExceptionFilter {
       responseModel = new ResponseModel(
         null,
         ResponseMessages.NOT_FOUND.code,
-        ResponseMessages.NOT_FOUND.message,
+        `Error: ${ResponseMessages.NOT_FOUND.message}`,
       );
 
       status = HttpStatus.NOT_FOUND;
@@ -43,13 +45,19 @@ export class UnhandledExceptionsFilter implements ExceptionFilter {
       responseModel = new ResponseModel(
         null,
         ResponseMessages.INVALID_REQUEST_PAYLOAD.code,
-        ResponseMessages.INVALID_REQUEST_PAYLOAD.message,
+        `Error: ${ResponseMessages.INVALID_REQUEST_PAYLOAD.message}`,
       );
 
       status = HttpStatus.BAD_REQUEST;
     }
 
-    this.logger.error(`${this.logNamespace}.catch.failed`, exception.stack, exception.message);
+    this.logger.error(
+      `${this.logNameSpace}.catch.failed`,
+      exception.stack,
+      exception.message,
+      'requestData:',
+      getRequestLogData(request),
+    );
 
     response.status(status).json(responseModel);
   }

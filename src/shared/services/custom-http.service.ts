@@ -2,18 +2,18 @@ import { Injectable, HttpService } from '@nestjs/common';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { LoggerService } from '../logger/logger.service';
+import { Logger } from '../../logger/logger';
 
 @Injectable()
 export class CustomHttpService {
-  private readonly logNamespace = `service.${CustomHttpService.name.toLowerCase()}`;
-  private readonly logger = LoggerService.getLoggerServiceInstance();
+  private readonly logNameSpace = `Service.${CustomHttpService.name}`;
+  private readonly logger = Logger.getInstance();
 
   constructor(private readonly httpService: HttpService) {}
 
   async post(url: string, payload: any, requestConfig?: AxiosRequestConfig) {
     this.logger.info(
-      `${this.logNamespace}.post.started`,
+      `${this.logNameSpace}.post.started`,
       '',
       'url:',
       url,
@@ -28,7 +28,7 @@ export class CustomHttpService {
       .toPromise()
       .then((response: AxiosResponse) => {
         this.logger.info(
-          `${this.logNamespace}.post.success`,
+          `${this.logNameSpace}.post.success`,
           '',
           'url:',
           url,
@@ -46,7 +46,7 @@ export class CustomHttpService {
 
   async get(url: string, requestConfig?: AxiosRequestConfig) {
     this.logger.info(
-      `${this.logNamespace}.get.started`,
+      `${this.logNameSpace}.get.started`,
       '',
       'url:',
       url,
@@ -59,7 +59,7 @@ export class CustomHttpService {
       .toPromise()
       .then((response: AxiosResponse) => {
         this.logger.info(
-          `${this.logNamespace}.get.success`,
+          `${this.logNameSpace}.get.success`,
           '',
           'url:',
           url,
@@ -75,7 +75,7 @@ export class CustomHttpService {
 
   async delete(url: string, requestConfig?: AxiosRequestConfig) {
     this.logger.info(
-      `${this.logNamespace}.delete.started`,
+      `${this.logNameSpace}.delete.started`,
       '',
       'url:',
       url,
@@ -88,7 +88,7 @@ export class CustomHttpService {
       .toPromise()
       .then((response: AxiosResponse) => {
         this.logger.info(
-          `${this.logNamespace}.delete.success`,
+          `${this.logNameSpace}.delete.success`,
           '',
           'url:',
           url,
