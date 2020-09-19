@@ -2,6 +2,7 @@ import { LoggerService } from '@nestjs/common';
 
 import { format, transports, createLogger, LoggerOptions, Logger as WinstonLogger } from 'winston';
 import { get } from 'config';
+import rTracer = require('cls-rtracer');
 
 import { getDateInYYYYMMDDFormat, isProductionEnv } from '../shared/utils/common.util';
 import { ServerConfig } from '../shared/models/config/server.config';
@@ -48,19 +49,19 @@ export class Logger implements LoggerService {
   }
 
   info(namespace: string, message?: any, ...meta: any[]) {
-    this.logger.log(`info`, message, { namespace, meta });
+    this.logger.log(`info`, message, { namespace, meta, correlationId: rTracer.id() });
   }
 
   error(namespace: string, trace: any, message?: any, ...meta: any[]) {
-    this.logger.log(`error`, message, { namespace, trace, meta });
+    this.logger.log(`error`, message, { namespace, trace, meta, correlationId: rTracer.id() });
   }
 
   warn(namespace: string, message?: any, ...meta: any[]) {
-    this.logger.log(`warn`, message, { namespace, meta });
+    this.logger.log(`warn`, message, { namespace, meta, correlationId: rTracer.id() });
   }
 
   debug(namespace: string, message?: any, ...meta: any[]) {
-    this.logger.log(`debug`, message, { namespace, meta });
+    this.logger.log(`debug`, message, { namespace, meta, correlationId: rTracer.id() });
   }
 
   log(message: any, namespace: string) {

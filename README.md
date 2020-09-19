@@ -4,6 +4,19 @@
 
 Starter project for [NestJS](https://docs.nestjs.com/).
 
+## Setup
+
+### System Information
+
+- [Node](https://nodejs.org/en/) : v10.16.3
+- [NPM](https://www.npmjs.com/) : 6.9.0
+- [PostgreSQL](https://www.postgresql.org/) : 11.6
+
+### Frameworks / Guides
+
+- [NestJS](https://nestjs.com/)
+- [TypeORM](https://typeorm.io/#/)
+
 ## Installation
 
 ```bash

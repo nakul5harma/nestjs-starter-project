@@ -3,6 +3,7 @@ import { RequestMethod } from '@nestjs/common';
 
 import 'reflect-metadata';
 import { get } from 'config';
+import rTracer = require('cls-rtracer');
 
 import { ValidationExceptionFilter } from './shared/filters/validation-exception.filter';
 import { CustomHttpExceptionFilter } from './shared/filters/custom-http-exception.filter';
@@ -22,7 +23,9 @@ async function bootstrap() {
     logger: Logger.getInstance(),
   });
 
-  app.setGlobalPrefix('nestjs-starter');
+  app.setGlobalPrefix('api');
+
+  app.use(rTracer.expressMiddleware());
 
   app.useGlobalFilters(
     new UnhandledExceptionsFilter(),
@@ -36,7 +39,7 @@ async function bootstrap() {
     new RequestLoggingInterceptor({
       excludePaths: [
         {
-          path: '/nestjs-starter/health',
+          path: '/api/health',
           method: RequestMethod.GET,
         },
       ],
