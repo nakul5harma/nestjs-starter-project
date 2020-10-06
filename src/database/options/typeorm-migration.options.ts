@@ -13,7 +13,7 @@ const typeOrmConfig: TypeOrmModuleOptions = {
   username: dbConfig.username,
   password: dbConfig.password,
   database: dbConfig.database,
-  entities: [__dirname + '/../entities/*.entity.ts'],
+  entities: [__dirname + '/../entities/*.entity.{ts,js}'],
   synchronize: false,
   migrationsTableName: 'migration',
   migrations: ['migrations/**/*.ts'],
