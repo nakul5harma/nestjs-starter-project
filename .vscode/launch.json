@@ -8,13 +8,13 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}//src//main.ts",
-      "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "restart": true,
-      "runtimeExecutable": "node",
+      "runtimeVersion": "16.13.0",
+      "runtimeExecutable": "nodemon",
       "console": "integratedTerminal",
-      "protocol": "inspector"
+      "args": ["${workspaceFolder}/src/main.ts"],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}"
     }
   ]
 }

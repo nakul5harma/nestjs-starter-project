@@ -8,8 +8,8 @@ Starter project for [NestJS](https://docs.nestjs.com/).
 
 ### System Information
 
-- [Node](https://nodejs.org/en/) : v10.16.3
-- [NPM](https://www.npmjs.com/) : 6.9.0
+- [Node](https://nodejs.org/en/) : v16.13.0
+- [NPM](https://www.npmjs.com/) : 8.13.2
 - [PostgreSQL](https://www.postgresql.org/) : 11.6
 
 ### Frameworks / Guides

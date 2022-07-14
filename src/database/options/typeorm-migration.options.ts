@@ -1,8 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import { get } from 'config';
-
-import { DBConfig } from '../../shared/models/config/db.config';
+import { get } from '../../../config';
+import { DBConfig } from '../../common/models/configs/db.config';
 
 const dbConfig = get<DBConfig>('db');
 
@@ -17,9 +16,6 @@ const typeOrmConfig: TypeOrmModuleOptions = {
   synchronize: false,
   migrationsTableName: 'migration',
   migrations: ['migrations/**/*.ts'],
-  cli: {
-    migrationsDir: 'migrations',
-  },
 };
 
 export = typeOrmConfig;

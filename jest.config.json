@@ -1,0 +1,11 @@
+{
+  "moduleFileExtensions": ["ts", "js", "json"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": "/__test__/.*(.spec.ts)$",
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "coverageDirectory": "./coverage",
+  "collectCoverageFrom": ["**/*.{ts,js}"]
+}
